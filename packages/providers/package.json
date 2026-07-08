@@ -1,0 +1,35 @@
+{
+  "name": "@browserai/providers",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./proxy": {
+      "types": "./dist/proxy/index.d.ts",
+      "default": "./dist/proxy/index.js"
+    },
+    "./captcha": {
+      "types": "./dist/captcha/index.d.ts",
+      "default": "./dist/captcha/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src",
+    "format": "prettier --write 'src/**/*.ts'",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "typescript": "^5.4.5"
+  }
+}

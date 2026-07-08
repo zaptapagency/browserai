@@ -1,0 +1,28 @@
+{
+  "name": "@browserai/scheduler",
+  "version": "0.1.0",
+  "private": true,
+  "description": "BrowserAI job scheduler (BullMQ consumer)",
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "lint": "eslint src --ext .ts",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write 'src/**/*.ts'",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "bullmq": "^4.15.0",
+    "redis": "^4.6.13",
+    "pino": "^8.17.2",
+    "@browserai/core": "workspace:*",
+    "@browserai/config": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "typescript": "^5.4.5",
+    "tsx": "^4.7.0"
+  }
+}

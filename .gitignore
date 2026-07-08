@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+pnpm-lock.yaml
+*.lock
+
+# Build output
+dist/
+build/
+.turbo/
+.next/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary
+*.tmp
+tmp/
+temp/

@@ -1,0 +1,36 @@
+{
+  "name": "browserai",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agent-native browser infrastructure SaaS",
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=20.11.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "type-check": "turbo run type-check",
+    "clean": "turbo run clean && rm -rf node_modules .turbo",
+    "db:migrate": "pnpm -F db migrate",
+    "db:seed": "pnpm -F db seed"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5",
+    "turbo": "^2.0.5"
+  },
+  "pnpm": {
+    "overrides": {
+      "typescript": "^5.4.5"
+    }
+  }
+}

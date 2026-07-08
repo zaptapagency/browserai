@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@browserai/core": ["packages/core/src/index.ts"],
+      "@browserai/db": ["packages/db/src/index.ts"],
+      "@browserai/config": ["packages/config/src/index.ts"],
+      "@browserai/ui": ["packages/ui/src/index.ts"],
+      "@browserai/providers": ["packages/providers/src/index.ts"],
+      "@browserai/sdk": ["packages/sdk/src/index.ts"]
+    }
+  },
+  "include": ["packages/**/*", "services/**/*", "apps/**/*"],
+  "exclude": ["node_modules", "dist", ".turbo", "coverage", ".next"]
+}
