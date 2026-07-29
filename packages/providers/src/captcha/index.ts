@@ -4,3 +4,4 @@
 
 export { CaptchaAdapter, type CaptchaChallenge, type CaptchaSolution, type CaptchaType } from './interface';
 export { MockCaptchaAdapter } from './mock';
+export { createCaptchaAdapter } from './factory';

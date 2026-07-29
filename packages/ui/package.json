@@ -30,7 +30,7 @@
     "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-primitive": "^2.0.0",
     "@radix-ui/react-separator": "^1.0.3",
-    "@radix-ui/react-slot": "^2.0.2",
+    "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "tailwind-merge": "^2.3.0"

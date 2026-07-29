@@ -158,6 +158,25 @@ export const SubmitActionSchema = z.object({
 export type SubmitAction = z.infer<typeof SubmitActionSchema>;
 
 /**
+ * Action: Solve a CAPTCHA challenge encountered on the page
+ * Resolved via the configured CaptchaAdapter (mock by default). This action
+ * is gated behind the confirmation-gate protocol by default since it may
+ * incur real-provider cost when a real solver is enabled.
+ */
+export const SolveCaptchaActionSchema = z.object({
+  type: z.literal('solve_captcha'),
+  challenge: z.object({
+    type: z.enum(['hcaptcha', 'recaptcha_v2', 'recaptcha_v3', 'cloudflare', 'image_captcha', 'other']),
+    siteKey: z.string().optional(),
+    pageUrl: z.string().url(),
+    imageBase64: z.string().optional(),
+  }),
+  timeout_ms: z.number().int().optional().default(30000),
+});
+
+export type SolveCaptchaAction = z.infer<typeof SolveCaptchaActionSchema>;
+
+/**
  * All action types
  */
 export const ActionSchema = z.discriminatedUnion('type', [
@@ -169,6 +188,7 @@ export const ActionSchema = z.discriminatedUnion('type', [
   UploadActionSchema,
   ExtractActionSchema,
   SubmitActionSchema,
+  SolveCaptchaActionSchema,
 ]);
 
 export type Action = z.infer<typeof ActionSchema>;
@@ -224,6 +244,40 @@ export const ConfirmationResponseSchema = z.object({
 export type ConfirmationResponse = z.infer<typeof ConfirmationResponseSchema>;
 
 /**
+ * Remote Assist Control Protocol
+ *
+ * Messages a human operator's client sends over the remote-assist control
+ * WebSocket to forward mouse/keyboard input to a session's live page while
+ * the session is paused for human takeover (session.remoteAssistActive).
+ */
+export const RemoteAssistInputSchema = z.discriminatedUnion('type', [
+  z.object({ type: z.literal('mouse_move'), x: z.number(), y: z.number() }),
+  z.object({
+    type: z.literal('mouse_down'),
+    x: z.number().optional(),
+    y: z.number().optional(),
+    button: z.enum(['left', 'right', 'middle']).default('left'),
+  }),
+  z.object({
+    type: z.literal('mouse_up'),
+    x: z.number().optional(),
+    y: z.number().optional(),
+    button: z.enum(['left', 'right', 'middle']).default('left'),
+  }),
+  z.object({
+    type: z.literal('mouse_click'),
+    x: z.number(),
+    y: z.number(),
+    button: z.enum(['left', 'right', 'middle']).default('left'),
+  }),
+  z.object({ type: z.literal('scroll'), deltaX: z.number(), deltaY: z.number() }),
+  z.object({ type: z.literal('key_press'), key: z.string() }),
+  z.object({ type: z.literal('type_text'), text: z.string() }),
+]);
+
+export type RemoteAssistInput = z.infer<typeof RemoteAssistInputSchema>;
+
+/**
  * WebSocket message types
  */
 export const WSMessageSchema = z.discriminatedUnion('type', [
@@ -232,6 +286,13 @@ export const WSMessageSchema = z.discriminatedUnion('type', [
     data: z.object({
       status: z.string(),
       session_id: z.string(),
+    }),
+  }),
+  z.object({
+    type: z.literal('remote_assist_status'),
+    data: z.object({
+      session_id: z.string(),
+      active: z.boolean(),
     }),
   }),
   z.object({

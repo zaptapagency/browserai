@@ -3,7 +3,7 @@
  * Populates with demo data for testing
  */
 
-import { getDb, closeDb, users, organizations, memberships, plans } from './index';
+import { getDb, closeDb, plans } from './index';
 
 async function seed() {
   console.log('Seeding database...');
@@ -58,4 +58,4 @@ async function seed() {
   }
 }
 
-seed();
+void seed();

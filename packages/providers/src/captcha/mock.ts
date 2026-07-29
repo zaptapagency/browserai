@@ -24,11 +24,12 @@ export class MockCaptchaAdapter extends CaptchaAdapter {
     };
   }
 
-  async reportError(token: string): Promise<void> {
+  reportError(token: string): Promise<void> {
     console.warn(`[Mock CAPTCHA] Token reported as incorrect: ${token}`);
+    return Promise.resolve();
   }
 
-  async isHealthy(): Promise<boolean> {
-    return true;
+  isHealthy(): Promise<boolean> {
+    return Promise.resolve(true);
   }
 }

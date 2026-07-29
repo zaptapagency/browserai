@@ -33,5 +33,23 @@ export async function closeDb() {
   }
 }
 
+/**
+ * Check database connectivity
+ * Returns true if a simple query succeeds
+ */
+export async function checkDbHealth(): Promise<boolean> {
+  try {
+    const connectionString = process.env.DATABASE_URL;
+    if (!connectionString) {
+      return false;
+    }
+    const sql = client ?? postgres(connectionString, { max: 1 });
+    await sql`SELECT 1`;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 // Export schema for migrations and type safety
 export * from './schema/index';

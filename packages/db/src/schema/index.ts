@@ -15,7 +15,6 @@ import {
   jsonb,
   index,
   uniqueIndex,
-  foreignKey,
 } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 
@@ -625,7 +624,7 @@ export const referrals = pgTable(
 
 // ===== Drizzle Relations (for type-safe queries) =====
 
-export const usersRelations = relations(users, ({ many, one }) => ({
+export const usersRelations = relations(users, ({ many }) => ({
   organizations: many(organizations),
   memberships: many(memberships),
   apiKeys: many(apiKeys),
