@@ -1,6 +1,6 @@
-# BrowserAI Multi-stage Production Build
+# BrowserAI Production Build
 
-FROM node:22-alpine AS builder
+FROM node:22-alpine
 
 WORKDIR /app
 
@@ -17,25 +17,6 @@ RUN pnpm install --frozen-lockfile --strict-peer-dependencies=false
 
 # Build all packages
 RUN pnpm run --recursive build
-
-# Runtime image
-FROM node:22-alpine
-
-WORKDIR /app
-
-# Install pnpm
-RUN corepack enable pnpm
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-
-# Copy node_modules from builder
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/.pnpm-store ./.pnpm-store
-
-# Copy built output from builder
-COPY --from=builder /app/packages ./packages
-COPY --from=builder /app/services ./services
-COPY --from=builder /app/apps ./apps
 
 # Install Chromium dependencies for Playwright
 RUN apk add --no-cache \
