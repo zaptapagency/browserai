@@ -9,8 +9,11 @@ RUN corepack enable pnpm
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
-# Copy workspace files
+# Copy workspace files and package.json files for all packages
 COPY pnpm-workspace.yaml pnpm-lock.yaml package.json ./
+COPY packages/*/package.json packages/
+COPY services/*/package.json services/
+COPY apps/*/package.json apps/
 
 # Install dependencies with frozen lockfile
 RUN pnpm install --frozen-lockfile
@@ -31,8 +34,11 @@ RUN corepack enable pnpm
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
-# Copy package files
+# Copy package files for dependency resolution
 COPY pnpm-workspace.yaml pnpm-lock.yaml package.json ./
+COPY packages/*/package.json packages/
+COPY services/*/package.json services/
+COPY apps/*/package.json apps/
 
 # Install production dependencies only
 RUN pnpm install --prod --frozen-lockfile
