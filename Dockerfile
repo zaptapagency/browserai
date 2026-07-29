@@ -28,14 +28,9 @@ RUN corepack enable pnpm
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
-# Copy workspace files needed for install
-COPY pnpm-workspace.yaml pnpm-lock.yaml package.json ./
-COPY packages/*/package.json packages/
-COPY services/*/package.json services/
-COPY apps/*/package.json apps/
-
-# Install production dependencies only
-RUN pnpm install --prod --frozen-lockfile --strict-peer-dependencies=false
+# Copy node_modules from builder
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.pnpm-store ./.pnpm-store
 
 # Copy built output from builder
 COPY --from=builder /app/packages ./packages
