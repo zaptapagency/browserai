@@ -27,5 +27,13 @@
     ".next",
     "node_modules",
     "coverage"
+  ],
+  "overrides": [
+    {
+      "files": ["**/next-env.d.ts"],
+      "rules": {
+        "@typescript-eslint/triple-slash-reference": "off"
+      }
+    }
   ]
 }
