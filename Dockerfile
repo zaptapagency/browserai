@@ -1,6 +1,6 @@
 # BrowserAI Production Build
 
-FROM node:22-alpine
+FROM node:22-debian
 
 WORKDIR /app
 
@@ -23,13 +23,14 @@ RUN pnpm run --recursive build && \
     ls -la services/api/dist/
 
 # Install Chromium dependencies for Playwright
-RUN apk add --no-cache \
-  chromium \
+RUN apt-get update && apt-get install -y \
+  chromium-browser \
   ca-certificates \
-  nss \
-  freetype \
-  harfbuzz \
-  ttf-dejavu
+  libssl3 \
+  libfreetype6 \
+  libharfbuzz0b \
+  fonts-dejavu \
+  && rm -rf /var/lib/apt/lists/*
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
