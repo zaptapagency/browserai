@@ -16,7 +16,7 @@ COPY services/*/package.json services/
 COPY apps/*/package.json apps/
 
 # Install dependencies with frozen lockfile
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --strict-peer-dependencies=false
 
 # Copy source code
 COPY . .
@@ -41,7 +41,7 @@ COPY services/*/package.json services/
 COPY apps/*/package.json apps/
 
 # Install production dependencies only
-RUN pnpm install --prod --frozen-lockfile
+RUN pnpm install --prod --frozen-lockfile --strict-peer-dependencies=false
 
 # Copy built output from builder
 COPY --from=builder /app/packages ./packages
