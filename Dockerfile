@@ -13,10 +13,14 @@ ENV PATH="$PNPM_HOME:$PATH"
 COPY . .
 
 # Install dependencies with frozen lockfile
-RUN pnpm install --frozen-lockfile --strict-peer-dependencies=false
+RUN pnpm install --frozen-lockfile --strict-peer-dependencies=false && \
+    echo "✓ pnpm install complete"
 
 # Build all packages
-RUN pnpm run --recursive build
+RUN pnpm run --recursive build && \
+    echo "✓ Build complete" && \
+    ls -la packages/config/dist/ && \
+    ls -la services/api/dist/
 
 # Install Chromium dependencies for Playwright
 RUN apk add --no-cache \
