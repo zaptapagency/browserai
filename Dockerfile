@@ -1,6 +1,6 @@
 # BrowserAI Production Build
 
-FROM node:22-debian
+FROM node:22-bookworm
 
 WORKDIR /app
 
