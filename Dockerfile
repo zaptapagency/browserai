@@ -24,11 +24,7 @@ RUN pnpm run --recursive build && \
 
 # Install Chromium dependencies for Playwright
 RUN apt-get update && apt-get install -y \
-  chromium-browser \
-  ca-certificates \
-  libssl3 \
-  libfreetype6 \
-  libharfbuzz0b \
+  chromium \
   fonts-dejavu \
   && rm -rf /var/lib/apt/lists/*
 
