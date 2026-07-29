@@ -17,10 +17,7 @@ RUN pnpm install --frozen-lockfile --strict-peer-dependencies=false && \
     echo "✓ pnpm install complete"
 
 # Build all packages
-RUN pnpm run --recursive build && \
-    echo "✓ Build complete" && \
-    ls -la packages/config/dist/ && \
-    ls -la services/api/dist/
+RUN pnpm run --recursive build || (echo "Build failed, checking files:"; find packages -name "dist" -type d; exit 1)
 
 # Install Chromium dependencies for Playwright
 RUN apt-get update && apt-get install -y \
