@@ -1,0 +1,69 @@
+name: browserai
+services:
+- name: api
+  github:
+    repo: zaptapagency/browserai
+    branch: main
+  build_command: pnpm install --frozen-lockfile --strict-peer-dependencies=false && pnpm run --recursive build
+  run_command: node services/api/dist/main.js
+  http_port: 3001
+  source_dir: .
+  envs:
+  - key: NODE_ENV
+    value: production
+  - key: APP_ENV
+    value: production
+  - key: WORKER_PORT
+    scope: RUN_AND_BUILD_TIME
+    value: "3000"
+  - key: API_PORT
+    scope: RUN_AND_BUILD_TIME
+    value: "3001"
+  - key: LOG_LEVEL
+    value: info
+  - key: WORKER_MAX_SESSIONS
+    value: "10"
+  - key: WORKER_SESSION_TTL_MS
+    value: "3600000"
+  - key: ENABLE_REAL_PROXY_PROVIDER
+    value: "false"
+  - key: PROXY_PROVIDER_TYPE
+    value: mock
+  - key: ENABLE_REAL_CAPTCHA_SOLVER
+    value: "false"
+  - key: CAPTCHA_SOLVER_TYPE
+    value: mock
+  health_check:
+    http_path: /health
+  http_routes:
+  - path: /
+    component_name: api
+
+- name: browser-worker
+  github:
+    repo: zaptapagency/browserai
+    branch: main
+  build_command: pnpm install --frozen-lockfile --strict-peer-dependencies=false && pnpm run --recursive build
+  run_command: node services/browser-worker/dist/main.js
+  http_port: 3000
+  source_dir: .
+  envs:
+  - key: NODE_ENV
+    value: production
+  - key: WORKER_PORT
+    value: "3000"
+  - key: API_PORT
+    value: "3001"
+  - key: LOG_LEVEL
+    value: info
+  health_check:
+    http_path: /health
+
+databases:
+- engine: PG
+  name: postgres
+  version: "15"
+
+- engine: REDIS
+  name: redis
+  version: "7"
